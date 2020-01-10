@@ -1,37 +1,30 @@
-//要考虑全为0，最终结果为0的情况
-#include <iostream>
-#include <algorithm>
-#include <string>
+#include <cstdio>
 #include <vector>
-#include <map>
-#include <set>
 using namespace std;
-int cmp(string a,string b){
-    return a+b<b+a;
-}
-int main()
-{
-    int n;
-    cin>>n;
-    vector<string> m(n);
-    for(int i=0;i<n;++i){
-        cin>>m[i];
-    }
-    sort(m.begin(),m.end(),cmp);
-    for(int i=0;i<m.size();++i){
-        if(0==i){
-            //cout<<stoi(m[i]);
-            if(stoi(m[i])==0) {
-                m.erase(m.begin());
-                i--;
-            }else{
-                cout<<stoi(m[i]);
-            }
-        }else{
-            cout<<m[i];
+vector<int> prime(50000, 1);
+int main() {
+    for(int i = 2; i * i < 50000; i++)
+        for(int j = 2; j * i < 50000; j++)
+            prime[j * i] = 0;
+    long int a;
+    scanf("%ld", &a);
+    printf("%ld=", a);
+    if(a == 1) printf("1");
+    bool state = false;
+    for(int i = 2; i < 50000 && a >= 2; i++) {
+        int cnt = 0, flag = 0;
+        while(prime[i] == 1 && a % i == 0) {
+            cnt++;
+            a = a / i;
+            flag = 1;
         }
+        if(flag) {
+            if(state) printf("*");
+            printf("%d", i);
+            state = true;
+        }
+        if(cnt >= 2) printf("^%d", cnt);
     }
-    if(m.size()==0) cout<<"0";
+    if (a > 1) printf("%s%ld", state ? "*" : "", a);
     return 0;
 }
-
