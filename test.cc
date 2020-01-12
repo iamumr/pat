@@ -1,30 +1,31 @@
-#include <cstdio>
-#include <vector>
+#include <iostream>
+#include <string>
 using namespace std;
-vector<int> prime(50000, 1);
-int main() {
-    for(int i = 2; i * i < 50000; i++)
-        for(int j = 2; j * i < 50000; j++)
-            prime[j * i] = 0;
-    long int a;
-    scanf("%ld", &a);
-    printf("%ld=", a);
-    if(a == 1) printf("1");
-    bool state = false;
-    for(int i = 2; i < 50000 && a >= 2; i++) {
-        int cnt = 0, flag = 0;
-        while(prime[i] == 1 && a % i == 0) {
-            cnt++;
-            a = a / i;
-            flag = 1;
-        }
-        if(flag) {
-            if(state) printf("*");
-            printf("%d", i);
-            state = true;
-        }
-        if(cnt >= 2) printf("^%d", cnt);
+string a[13] = {"tret", "jan", "feb", "mar", "apr", "may", "jun", "jly", "aug", "sep", "oct", "nov", "dec"};
+string b[13] = {"####", "tam", "hel", "maa", "huh", "tou", "kes", "hei", "elo", "syy", "lok", "mer", "jou"};
+string s;
+int len;
+void func1(int t) {
+    if (t / 13) cout << b[t / 13];
+    if ((t / 13) && (t % 13)) cout << " ";
+    if (t % 13 || t == 0) cout << a[t % 13];
+}
+void func2() {
+    int t1 = 0, t2 = 0;
+    string s1 = s.substr(0, 3), s2;
+    if (len > 4) s2 = s.substr(4, 3);
+    for (int j = 1; j <= 12; j++) {
+        if (s1 == a[j] || s2 == a[j]) t2 = j;
+        if (s1 == b[j]) t1 = j;
     }
-    if (a > 1) printf("%s%ld", state ? "*" : "", a);
+    cout << t1 * 13 + t2;
+}
+int main(){
+    for(int i=0;i<169;i++){
+        getline(cin,s);
+        len=s.length();
+        func2();
+        cout<<endl;
+    }
     return 0;
 }
